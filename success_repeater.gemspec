@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["luigi.sk@gmail.com"]
   spec.description   = %q{repeat yield command in transaction until is executed successfully}
   spec.summary       = %q{devel}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/luigi-sk/success-repeater"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
