@@ -1,7 +1,7 @@
 
 # SuccessRepeater
 
-TODO: Write a gem description
+Rerun yield code if exception is raised.
 
 ## Installation
 
@@ -19,7 +19,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    require 'success_repeater'
+    transaction = SuccessRepeater::Base.new(:max_seconds_run=>10.minutes.to_i,
+        :sleep_time=>30.seconds.to_i)
+    transaction.run do
+      # your code
+      puts "run your code. If error was raised then process sleeps to 30seconds a run your code again."
+    end
 
 ## Contributing
 
