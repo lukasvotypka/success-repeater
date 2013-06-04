@@ -2,13 +2,15 @@ require "success_repeater/version"
 
 module SuccessRepeater
   class Base
-    attr_accessor :max_hours_run
+    attr_accessor :max_seconds_run, :sleep_time
 
     def initialize(options={})
       options = options.reverse_merge(
-          :max_hours_run => 20
+          :max_seconds_run => 20.hours.to_i,
+          :sleep_time => 10.minutes.to_i
       )
-      @max_hours_run = options[:max_hours_run]
+      @max_hours_run = options[:max_seconds_run]
+      @sleep_time = options[:sleep_time]
     end
 
     def run(&block)
@@ -29,8 +31,8 @@ module SuccessRepeater
         rescue => e
           on_failure(e)
           # prevent blocking cron next day job
-          hours_run = ((DateTime.now - start_at) * 24).to_i
-          if hours_run > @max_hours_run || Rails.env=="development"
+          seconds_run = ((DateTime.now - start_at) * 24 * 60 *60).to_i
+          if seconds_run > @max_seconds_run
             done = true
             error = e
           else
@@ -47,8 +49,8 @@ module SuccessRepeater
 
     def on_failure(e)
       ExceptionNotifier::Notifier.background_exception_notification(e) if defined?(ExceptionNotifier::Notifier.background_exception_notification)
-      Rails.logger.error_with_exception_param("Succ repeater error", e)
-      sleep(60*10) # 10 minutes
+      Rails.logger.error("Succ repeater error #{e.backtrace.join("\n")}")
+      sleep(sleep_time)
     end
   end
 end
