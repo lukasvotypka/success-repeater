@@ -24,7 +24,7 @@ Or install it yourself as:
         :sleep_time=>30.seconds.to_i)
     transaction.run do
       # your code
-      puts "run your code. If error was raised then process sleeps to 30seconds a run your code again."
+      puts "run your code. If error was raised then process sleeps to 30seconds and run your code again."
     end
 
 ## Contributing
@@ -34,3 +34,5 @@ Or install it yourself as:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/6033ec926ba1d835bd9d28dc40d93766 "githalytics.com")](http://githalytics.com/luigi-sk/success-repeater)
