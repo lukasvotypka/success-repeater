@@ -54,7 +54,7 @@ module SuccessRepeater
 
     def on_failure(e)
       ExceptionNotifier::Notifier.background_exception_notification(e) if defined?(ExceptionNotifier::Notifier.background_exception_notification)
-      err_msg = "Succ repeater error #{e.message} #{e.backtrace.join("\n")}"
+      err_msg = "Succ repeater error msg:#{e.message} backtrace:#{e.backtrace.join("\n")}"
       Rails.logger.error(err_msg) if defined?(Rails.logger.error)
       puts err_msg
       sleep(@sleep_time)
