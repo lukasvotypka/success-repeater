@@ -53,7 +53,11 @@ module SuccessRepeater
     end
 
     def on_failure(e)
-      ExceptionNotifier::Notifier.background_exception_notification(e) if defined?(ExceptionNotifier::Notifier.background_exception_notification)
+      begin
+        msg = ExceptionNotifier::Notifier.background_exception_notification(e) if defined?(ExceptionNotifier::Notifier.background_exception_notification)
+        msg.deliver
+      rescue => e
+      end
       err_msg = "Succ repeater error msg:#{e.message} backtrace:#{e.backtrace.join("\n")}"
       Rails.logger.error(err_msg) if defined?(Rails.logger.error)
       puts err_msg
